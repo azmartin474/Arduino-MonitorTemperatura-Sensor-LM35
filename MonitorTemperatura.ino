@@ -1,12 +1,17 @@
-#include <LiquidCrystal.h>
+//Bibliotecas
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 int tempC;
 const int sensorTemp= A0;
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+//0x27 es la dirección I2C (la más común).
+//16, 2 indica que la pantalla es de 16 columnas y 2 filas.
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  lcd.begin(16, 2);
+  // inicialización
+lcd.init();
+lcd.backlight();
 }
 
 void loop() {

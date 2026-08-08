@@ -89,6 +89,43 @@ En esta configuración, los números corresponden a pines digitales del Arduino 
 
  Si la tarejta Arduino tiene un solo pin 5V, ese mismo punto puede alimentar VDD y la retroiluminación A, siempre que el consumo total esté dentro de lo que puede suministrar la placa y la retroiluminación tenga su limitación de corriente correspondiente.
 
+### Commit 4
+
+**`Visualización de temperatura en LCD 16x2 mediante I2C`**
+
+Se incorpora una LCD 16x2 con módulo I2C, sustituyendo la conexión paralela utilizada anteriormente.
+
+#### Librerías:
+
+#include <Wire.h>
+
+#include <LiquidCrystal_I2C.h>
+
+#### Configuración:
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+- Dirección I2C utilizada: 0x27
+
+- LCD de 16 columnas y 2 filas.
+
+- Inicialización mediante lcd.init().
+
+- Retroiluminación mediante lcd.backlight().
+
+#### Conexiones en Arduino Uno:
+
+| LCD I2C | Arduino |
+|---|---|
+| VCC | 5 V |
+| GND | GND |
+| SDA | A4 |
+| SCL | A5 |
+
+> **Nota:** la dirección 0x27 es una de las más comunes en módulos I2C para LCD, pero puede variar según el módulo. Otras direcciones frecuentes son 0x3F, 0x20 y 0x38. Si la pantalla no responde, es recomendable comprobar la dirección I2C del módulo mediante un escáner I2C.
+
+La pantalla mantiene la visualización bilingüe, alternando entre "Temperatura:" y "Temperature:" cada segundo.
+
 ## Nota
 
 La conversión implementada corresponde únicamente al **LM35**. Para utilizar un **TMP36** es necesario modificar la fórmula, ya que este sensor incorpora un **offset de 500 mV**.
