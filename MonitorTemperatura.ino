@@ -18,5 +18,12 @@ lcd.setCursor(0,0);
 lcd.print("Temperatura:");
 lcd.setCursor(0,1);
 lcd.print(tempC);
-delay(500);
+delay(1000);
+lcd.clear();
+lcd.setCursor(0,0);
+lcd.print("Temperature:");
+lcd.setCursor(0,1);
+lcd.print(tempC);
+delay(1000);
+lcd.clear();
 }
