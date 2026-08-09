@@ -126,10 +126,48 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 La pantalla mantiene la visualización bilingüe, alternando entre "Temperatura:" y "Temperature:" cada segundo.
 
+### Commit 5
+
+**`Adaptar lectura de temperatura al sensor TMP36`**
+
+Se modifica el cálculo de temperatura para utilizar un sensor TMP36.
+
+#### El código ahora:
+
+- Convierte la lectura analógica del sensor a voltaje.
+- Aplica la fórmula correspondiente al TMP36.
+- Muestra la temperatura en °C en el Monitor Serie.
+- Muestra la temperatura en °C en la LCD 16x2 mediante I2C.
+- Mantiene la dirección I2C 0x27.
+
+#### Conversión utilizada:
+
+Voltaje = lectura × (5.0 / 1023.0)
+
+Temperatura = (Voltaje - 0.5) × 100
+
+#### El TMP36 tiene un offset de aproximadamente 0.5 V a 0 °C y una sensibilidad aproximada de 10 mV/°C.
+
+#### La LCD muestra la temperatura con el símbolo de grados:
+
+Temperatura:
+25°C
+
+#### La lectura se actualiza cada 500 ms.
+
 ## Nota
 
 La conversión implementada corresponde únicamente al **LM35**. Para utilizar un **TMP36** es necesario modificar la fórmula, ya que este sensor incorpora un **offset de 500 mV**.
 
+La diferencia entre las dos fórmulas:
+
+```text
+LM35: Temperatura = Voltaje × 100
+TMP36: Temperatura = (Voltaje - 0.5) × 100
+```
+Con el sensor TMP36 se usa float, para conservar los decimales durante la conversión.
+
+Aunque en este código la LCD finalmente se usa ```(int)temperatura```, para que se muestre solamente la parte entera.
 ## Licencia
 
 Proyecto desarrollado con fines educativos.
